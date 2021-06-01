@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "nodemon ./bin/www",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "seeditems": "node ./bin/seed.items.js",
+    "seedusers": "node ./bin/seed.user.js"
   },
   "dependencies": {
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "connect-mongo": "^4.4.1",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",

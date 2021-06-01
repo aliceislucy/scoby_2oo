@@ -1,8 +1,42 @@
 const express = require("express");
 const router = express.Router();
+const UserModel = require("../models/User");
 
-router.get("/", function (req, res, next) {
-  res.send("respond with a resource");
+router.get("/", (req, res, next) => {
+  console.log("THIS IS REQ SESSION");
+  console.log(req.session.currentUser)
+  UserModel.findById(req.session.currentUser._id)
+    .then((currentUser) => {
+      // console.log("THIS IS CURRENT USER");
+      // console.log(currentUser);
+      res.status(200).json(currentUser);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
 });
 
+router.patch("/", (req, res, next) => {
+  UserModel.findByIdAndUpdate(req.session.currentUser._id, req.body, {
+    new: true,
+  })
+    .then((updatedUser) => {
+      res.status(200).json(updatedUser);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
+
+router.get("/items", (req, res, next) => {
+  // console.log("hello");
+  ItemModel.find({ creator: req.session.currentUser })
+    .then((ItemDocuments) => {
+      // res.render("yourview.hbs", { Items: ItemDocuments }); // Module 2
+      res.status(200).json(ItemDocuments);
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+});
 module.exports = router;

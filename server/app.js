@@ -42,7 +42,8 @@ app.use(
  */
 
 app.use("/api/auth", require("./routes/auth"));
-app.use("/api/users", require("./routes/users"));
+app.use("/api/users/me", require("./routes/users"));
+app.use("/api/item", require("./routes/item"));
 
 /**
  * Error Handling middlewares

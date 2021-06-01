@@ -34,6 +34,8 @@ router.post("/signin", (req, res, next) => {
     .catch(next);
 });
 
+
+
 router.post("/signup", (req, res, next) => {
   const { email, password, firstName, lastName } = req.body;
 
@@ -74,6 +76,9 @@ router.post("/signup", (req, res, next) => {
     .catch(next);
 });
 
+
+
+
 router.get("/isLoggedIn", (req, res, next) => {
   // If currentUser is defined in the session it means the user is logged in.
   if (req.session.currentUser) {
@@ -87,6 +92,9 @@ router.get("/isLoggedIn", (req, res, next) => {
     res.status(401).json({ message: "Unauthorized" });
   }
 });
+
+
+
 
 router.get("/logout", (req, res, next) => {
   // Well...

@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const UserModel = require("../models/User");
+const ItemModel = require("../models/Item");
 
 router.get("/", (req, res, next) => {
   console.log("THIS IS REQ SESSION");
   console.log(req.session.currentUser)
-  UserModel.findById(req.session.currentUser._id)
+  UserModel.findById(req.session.currentUser)
     .then((currentUser) => {
       // console.log("THIS IS CURRENT USER");
       // console.log(currentUser);
@@ -17,7 +18,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.patch("/", (req, res, next) => {
-  UserModel.findByIdAndUpdate(req.session.currentUser._id, req.body, {
+  UserModel.findByIdAndUpdate(req.session.currentUser, req.body, {
     new: true,
   })
     .then((updatedUser) => {

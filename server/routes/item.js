@@ -7,6 +7,7 @@ const ItemModel = require("../models/Item");
  *
  */
 
+
 // GET http://localhost:2021/api/item (R)ead
 
 router.get("/", (req, res, next) => {
@@ -21,6 +22,7 @@ router.get("/", (req, res, next) => {
     });
 });
 
+
 // GET http://localhost:2021/api/item/theIdOfAItem (R)ead
 router.get("/:id", (req, res, next) => {
   ItemModel.findById(req.params.id)
@@ -32,31 +34,20 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
+
 // POST http://localhost:2021/api/item   (C)reate
-router.post("/", (req, res, next) => {
-  // const newItem = { ...req.body };
 
-  // newItem.image = "feauhfuaehfueoafaueofa"
-  const { name, price, image } = req.body;
+router.post("/", (req, res, next)=> {
+  const newItem = {...req.body}
+  Item.create(newItem)
+  .then((itemDocuments)=>{
+      res.json(itemDocuments)
+  })
+  .catch((error)=>{
+      res.json(error)
+  })
+})
 
-  if (!name) {
-    return res.status(400).json({ message: "No empty fields please !" });
-  }
-
-  const newItem = {
-    name,
-    price,
-    image,
-  };
-
-  ItemModel.create(newItem)
-    .then((ItemDocument) => {
-      res.status(201).json(ItemDocument);
-    })
-    .catch((error) => {
-      res.status(500).json(error);
-    });
-});
 
 //  PATCH http://localhost:2021/api/item/theIdOfAItem (U)pdate
 
@@ -69,6 +60,7 @@ router.patch("/:id", (req, res, next) => {
       res.status(500).json(error);
     });
 });
+
 
 //  DELETE http://localhost:2021/api/item/theIdOfAItem (D)elete
 
